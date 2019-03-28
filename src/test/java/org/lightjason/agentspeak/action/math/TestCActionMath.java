@@ -21,7 +21,7 @@
  * @endcond
  */
 
-package org.lightjason.agentspeak.action;
+package org.lightjason.agentspeak.action.math;
 
 import com.codepoetics.protonpack.StreamUtils;
 import com.tngtech.java.junit.dataprovider.DataProvider;
@@ -33,43 +33,7 @@ import org.apache.commons.math3.primes.Primes;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.lightjason.agentspeak.action.math.CACos;
-import org.lightjason.agentspeak.action.math.CASin;
-import org.lightjason.agentspeak.action.math.CATan;
-import org.lightjason.agentspeak.action.math.CAbs;
-import org.lightjason.agentspeak.action.math.CAverage;
-import org.lightjason.agentspeak.action.math.CBinomial;
-import org.lightjason.agentspeak.action.math.CCeil;
-import org.lightjason.agentspeak.action.math.CCos;
-import org.lightjason.agentspeak.action.math.CCosh;
-import org.lightjason.agentspeak.action.math.CDegrees;
-import org.lightjason.agentspeak.action.math.CExp;
-import org.lightjason.agentspeak.action.math.CFactorial;
-import org.lightjason.agentspeak.action.math.CFloor;
-import org.lightjason.agentspeak.action.math.CGeometricMean;
-import org.lightjason.agentspeak.action.math.CHarmonicMean;
-import org.lightjason.agentspeak.action.math.CHypot;
-import org.lightjason.agentspeak.action.math.CIsPrime;
-import org.lightjason.agentspeak.action.math.CLog;
-import org.lightjason.agentspeak.action.math.CLog10;
-import org.lightjason.agentspeak.action.math.CMax;
-import org.lightjason.agentspeak.action.math.CMaxIndex;
-import org.lightjason.agentspeak.action.math.CMin;
-import org.lightjason.agentspeak.action.math.CMinIndex;
-import org.lightjason.agentspeak.action.math.CNextPrime;
-import org.lightjason.agentspeak.action.math.CPow;
-import org.lightjason.agentspeak.action.math.CPrimeFactors;
-import org.lightjason.agentspeak.action.math.CRadians;
-import org.lightjason.agentspeak.action.math.CRound;
-import org.lightjason.agentspeak.action.math.CSigmoid;
-import org.lightjason.agentspeak.action.math.CSignum;
-import org.lightjason.agentspeak.action.math.CSin;
-import org.lightjason.agentspeak.action.math.CSinh;
-import org.lightjason.agentspeak.action.math.CSqrt;
-import org.lightjason.agentspeak.action.math.CStirling;
-import org.lightjason.agentspeak.action.math.CSum;
-import org.lightjason.agentspeak.action.math.CTan;
-import org.lightjason.agentspeak.action.math.CTanh;
+import org.lightjason.agentspeak.action.IAction;
 import org.lightjason.agentspeak.language.CRawTerm;
 import org.lightjason.agentspeak.language.ITerm;
 import org.lightjason.agentspeak.language.execution.IContext;
