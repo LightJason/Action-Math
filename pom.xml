@@ -31,7 +31,7 @@
     <!-- project meta information -->
     <name>LightJason AgentSpeak(L++) - Math Action</name>
     <description>AgentSpeak(L++) action for math structure</description>
-    <url>https://github.com/LightJason/AgentSpeak</url>
+    <url>https://github.com/LightJason/Java-Action-Math</url>
     
     <organization>
         <name>LightJason</name>
@@ -47,13 +47,13 @@
     
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/LightJason/Action-Math/issues</url>
+        <url>https://github.com/LightJason/Java-Action-Math/issues</url>
     </issueManagement>
     
     <scm>
-        <url>https://github.com/LightJason/Action-Math</url>
-        <connection>scm:git:git://github.com:LightJason/Action-Math.git</connection>
-        <developerConnection>scm:git:git@github.com:LightJason/Action-Math.git</developerConnection>
+        <url>https://github.com/LightJason/Java-Action-Math</url>
+        <connection>scm:git:git://github.com:LightJason/Java-Action-Math.git</connection>
+        <developerConnection>scm:git:git@github.com:LightJason/Java-Action-Math.git</developerConnection>
         <tag>v0.0.1</tag>
     </scm>
     
