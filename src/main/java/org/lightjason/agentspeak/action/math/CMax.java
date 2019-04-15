@@ -89,6 +89,6 @@ public final class CMax extends IBaseAction
             );
 
         p_return.add( CRawTerm.of( l_value.getAsDouble() ) );
-        return Stream.of();
+        return Stream.empty();
     }
 }

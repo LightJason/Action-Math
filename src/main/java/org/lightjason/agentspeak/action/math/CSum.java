@@ -81,6 +81,6 @@ public final class CSum extends IBaseAction
                        .mapToDouble( Number::doubleValue ).sum()
             )
         );
-        return Stream.of();
+        return Stream.empty();
     }
 }

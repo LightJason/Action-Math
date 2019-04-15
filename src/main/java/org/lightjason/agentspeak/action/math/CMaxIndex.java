@@ -93,6 +93,6 @@ public final class CMaxIndex extends IBaseAction
             )
         );
 
-        return Stream.of();
+        return Stream.empty();
     }
 }

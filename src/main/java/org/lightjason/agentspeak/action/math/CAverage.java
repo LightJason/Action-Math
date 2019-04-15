@@ -82,7 +82,7 @@ public final class CAverage extends IBaseAction
             CCommon.flatten( p_argument ).mapToDouble( i -> i.<Number>raw().doubleValue() ).average()
                    .orElseThrow( () -> new CExecutionException( p_context ) )
         ) );
-        return Stream.of();
+        return Stream.empty();
     }
 
 }
