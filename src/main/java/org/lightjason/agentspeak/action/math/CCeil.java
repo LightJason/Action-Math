@@ -44,7 +44,7 @@ import java.util.stream.Stream;
  *
  * {@code [A|B|C] = .math/ceil(1.3, 2.8, 9.7);}
  *
- * @see https://en.wikipedia.org/wiki/Floor_and_ceiling_functions
+ * @see <a href="https://en.wikipedia.org/wiki/Floor_and_ceiling_functions"></a>
  */
 public final class CCeil extends IBaseAction
 {

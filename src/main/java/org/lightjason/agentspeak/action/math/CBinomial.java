@@ -47,7 +47,7 @@ import java.util.stream.Stream;
  *
  * {@code [B1|B2] = .math/binomial( 49, 6,  30, 5 );}
  *
- * @see https://en.wikipedia.org/wiki/Binomial_coefficient
+ * @see <a href="https://en.wikipedia.org/wiki/Binomial_coefficient"></a>
  */
 public final class CBinomial extends IBaseAction
 {

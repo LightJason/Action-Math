@@ -48,7 +48,7 @@ import java.util.stream.Stream;
  *
  * {@code [S1|S2] = .math/stirling(2,3, [4,5]);}
  *
- * @see https://en.wikipedia.org/wiki/Stirling_number
+ * @see <a href="https://en.wikipedia.org/wiki/Stirling_number"></a>
  */
 public final class CStirling extends IBaseAction
 {

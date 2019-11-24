@@ -45,7 +45,7 @@ import java.util.stream.Stream;
  *
  * {@code [A|B|C|D|E] = .math/factorial( 5, [[1,2], 3,4]);}
  *
- * @see https://en.wikipedia.org/wiki/Factorial
+ * @see <a href="https://en.wikipedia.org/wiki/Factorial"></a>
  */
 public final class CFactorial extends IBaseAction
 {

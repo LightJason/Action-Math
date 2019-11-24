@@ -48,7 +48,7 @@ import java.util.stream.Stream;
  *
  * {@code [A | B | C] = .math/sigmoid( 1, 1, 1, 10, 20, 30 );}
  *
- * @see https://en.wikipedia.org/wiki/Sigmoid_function
+ * @see <a href="https://en.wikipedia.org/wiki/Sigmoid_function"></a>
  */
 public final class CSigmoid extends IBaseAction
 {

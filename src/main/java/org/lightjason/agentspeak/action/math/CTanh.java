@@ -44,7 +44,7 @@ import java.util.stream.Stream;
  *
  * {@code [A|B|C] = .math/tanh( [1,2], 3 );}
  *
- * @see https://en.wikipedia.org/wiki/Hyperbolic_function
+ * @see <a href="https://en.wikipedia.org/wiki/Hyperbolic_function"></a>
  */
 public final class CTanh extends IBaseAction
 {

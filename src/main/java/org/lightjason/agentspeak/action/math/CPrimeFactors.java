@@ -46,8 +46,8 @@ import java.util.stream.Stream;
  *
  * {@code [L1|L2] = .math/primfactors( 8, [120] );}
  *
- * @see https://en.wikipedia.org/wiki/Prime_number
- * @see https://en.wikipedia.org/wiki/Primality_test
+ * @see <a href="https://en.wikipedia.org/wiki/Prime_number"></a>
+ * @see <a href="https://en.wikipedia.org/wiki/Primality_test"></a>
  */
 public final class CPrimeFactors extends IBaseAction
 {

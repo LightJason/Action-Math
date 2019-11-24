@@ -44,7 +44,7 @@ import java.util.stream.Stream;
  *
  * {@code [X|Y|Z] = .math/tan( pi, 1.3*pi, 0.43*pi );}
  *
- * @see https://en.wikipedia.org/wiki/Trigonometric_functions
+ * @see <a href="https://en.wikipedia.org/wiki/Trigonometric_functions"></a>
  */
 public final class CTan extends IBaseAction
 {

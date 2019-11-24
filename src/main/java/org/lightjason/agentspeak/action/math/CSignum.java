@@ -44,7 +44,7 @@ import java.util.stream.Stream;
  *
  * {@code [A|B|C] = .math/signum(-3, 0, 8);}
  *
- * @see https://en.wikipedia.org/wiki/Sign_function
+ * @see <a href="https://en.wikipedia.org/wiki/Sign_function"></a>
  */
 public final class CSignum extends IBaseAction
 {

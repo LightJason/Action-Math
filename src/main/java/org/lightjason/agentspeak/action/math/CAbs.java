@@ -43,7 +43,7 @@ import java.util.stream.Stream;
  *
  * {@code [A | B | C] = .math/abs( -1, -5, 3 );}
  *
- * @see https://en.wikipedia.org/wiki/Absolute_value
+ * @see <a href="https://en.wikipedia.org/wiki/Absolute_value"></a>
  */
 public final class CAbs extends IBaseAction
 {

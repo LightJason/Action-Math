@@ -44,7 +44,7 @@ import java.util.stream.Stream;
  *
  * {@code [X|Y] = .math/exp(1,8);}
  *
- * @see https://en.wikipedia.org/wiki/Exponential_function
+ * @see <a href="https://en.wikipedia.org/wiki/Exponential_function"></a>
  */
 public final class CExp extends IBaseAction
 {

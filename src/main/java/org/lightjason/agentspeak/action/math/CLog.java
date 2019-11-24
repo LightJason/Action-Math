@@ -44,8 +44,8 @@ import java.util.stream.Stream;
  *
  * {@code [A|B|C] = .math/log( [1,2], 3 );}
  *
- * @see https://en.wikipedia.org/wiki/Natural_logarithm
- * @see https://en.wikipedia.org/wiki/Logarithm
+ * @see <a href="https://en.wikipedia.org/wiki/Natural_logarithm"></a>
+ * @see <a href="https://en.wikipedia.org/wiki/Logarithm"></a>
  */
 public final class CLog extends IBaseAction
 {

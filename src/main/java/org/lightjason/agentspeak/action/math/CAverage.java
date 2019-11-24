@@ -45,7 +45,7 @@ import java.util.stream.Stream;
  *
  * {@code A = .math/average( 1, 3, 9, [10, [11, 12]] );}
  *
- * @see https://en.wikipedia.org/wiki/Average
+ * @see <a href="https://en.wikipedia.org/wiki/Average"></a>
  */
 public final class CAverage extends IBaseAction
 {

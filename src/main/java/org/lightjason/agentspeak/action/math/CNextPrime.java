@@ -45,8 +45,8 @@ import java.util.stream.Stream;
  *
  * {@code [A|B|C] = .math/nextprime( [12, [144, 1096]] );}
  *
- * @see https://en.wikipedia.org/wiki/Prime_number
- * @see https://en.wikipedia.org/wiki/Primality_test
+ * @see <a href="https://en.wikipedia.org/wiki/Prime_number"></a>
+ * @see <a href="https://en.wikipedia.org/wiki/Primality_test"></a>
  */
 public final class CNextPrime extends IBaseAction
 {

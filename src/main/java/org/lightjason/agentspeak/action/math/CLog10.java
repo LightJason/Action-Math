@@ -44,7 +44,7 @@ import java.util.stream.Stream;
  *
  * {@code [A|B|C] = .math/log10( [1,2], 3 );}
  *
- * @see https://en.wikipedia.org/wiki/Logarithm
+ * @see <a href="https://en.wikipedia.org/wiki/Logarithm"></a>
  */
 public final class CLog10 extends IBaseAction
 {

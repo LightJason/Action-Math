@@ -44,7 +44,7 @@ import java.util.stream.Stream;
  *
  * {@code [X|Y|Z] = .math/sinh( 3.2, [5,8, [1.2]] );}
  *
- * @see https://en.wikipedia.org/wiki/Hyperbolic_function
+ * @see <a href="https://en.wikipedia.org/wiki/Hyperbolic_function"></a>
  */
 public final class CSinh extends IBaseAction
 {

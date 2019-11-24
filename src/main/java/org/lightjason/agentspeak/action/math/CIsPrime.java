@@ -45,8 +45,8 @@ import java.util.stream.Stream;
  *
  * {@code [P1|P2] = .math/isprime(3, 4);}
  *
- * @see https://en.wikipedia.org/wiki/Prime_number
- * @see https://en.wikipedia.org/wiki/Primality_test
+ * @see <a href="https://en.wikipedia.org/wiki/Prime_number"></a>
+ * @see <a href="https://en.wikipedia.org/wiki/Primality_test"></a>
  */
 public final class CIsPrime extends IBaseAction
 {

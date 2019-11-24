@@ -44,7 +44,7 @@ import java.util.stream.Stream;
  *
  * {@code G = .math/geometricmean( 1, 3, 9, [10, [11, 12]] );}
  *
- * @see https://en.wikipedia.org/wiki/Average
+ * @see <a href="https://en.wikipedia.org/wiki/Average"></a>
  */
 public final class CGeometricMean extends IBaseAction
 {
