@@ -24,15 +24,12 @@
 package org.lightjason.agentspeak.action.math;
 
 import com.codepoetics.protonpack.StreamUtils;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
-import org.apache.commons.lang3.tuple.Triple;
 import org.apache.commons.math3.primes.Primes;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.lightjason.agentspeak.action.IAction;
 import org.lightjason.agentspeak.language.CRawTerm;
 import org.lightjason.agentspeak.language.ITerm;
@@ -53,7 +50,6 @@ import java.util.stream.Stream;
 /**
  * test math functions
  */
-@RunWith( DataProviderRunner.class )
 public final class TestCActionMath extends IBaseTest
 {
 
@@ -61,8 +57,7 @@ public final class TestCActionMath extends IBaseTest
      * data provider generator for single-value tests
      * @return data
      */
-    @DataProvider
-    public static Object[] singlevaluegenerate()
+    public static Stream<Arguments> singlevaluegenerate()
     {
         return Stream.concat(
 
@@ -128,7 +123,7 @@ public final class TestCActionMath extends IBaseTest
                 i -> Math.tanh( i.doubleValue() )
             )
 
-        ).toArray();
+        );
     }
 
 
@@ -136,8 +131,7 @@ public final class TestCActionMath extends IBaseTest
      * data provider generator for aggregation-value tests
      * @return data
      */
-    @DataProvider
-    public static Object[] aggregationvaluegenerate()
+    public static Stream<Arguments> aggregationvaluegenerate()
     {
         final Random l_random = new Random();
 
@@ -157,29 +151,6 @@ public final class TestCActionMath extends IBaseTest
             i -> i.mapToDouble( Number::doubleValue ).min().getAsDouble(),
             i -> i.mapToDouble( Number::doubleValue ).max().getAsDouble()
 
-        ).toArray();
-    }
-
-
-    /**
-     * create test case
-     *
-     * @param p_input input data
-     * @param p_class action class
-     * @param p_result result function
-     * @return test-case data
-     */
-    @SafeVarargs
-    @SuppressWarnings( "varargs" )
-    private static Stream<Object> singlevaluetestcase( final Stream<Number> p_input, final Stream<Class<? extends IAction>> p_class,
-                                                       final Function<Number, ?>... p_result )
-    {
-        final List<ITerm> l_input = p_input.map( CRawTerm::of ).collect( Collectors.toList() );
-
-        return StreamUtils.zip(
-            p_class,
-            Arrays.stream( p_result ),
-            ( i, j ) -> new ImmutableTriple<>( l_input, i, j )
         );
     }
 
@@ -194,15 +165,38 @@ public final class TestCActionMath extends IBaseTest
      */
     @SafeVarargs
     @SuppressWarnings( "varargs" )
-    private static Stream<Object> aggregationvaluetestcase( final Stream<Number> p_input, final Stream<Class<? extends IAction>> p_class,
-                                                            final Function<Stream<Number>, ?>... p_result )
+    private static Stream<Arguments> singlevaluetestcase( final Stream<Number> p_input, final Stream<Class<? extends IAction>> p_class,
+                                                          final Function<Number, ?>... p_result )
     {
-        final List<ITerm> l_input = p_input.map( CRawTerm::of ).collect( Collectors.toList() );
+        final List<Object> l_input = p_input.collect( Collectors.toList() );
 
         return StreamUtils.zip(
             p_class,
             Arrays.stream( p_result ),
-            ( i, j ) -> new ImmutableTriple<>( l_input, i, j )
+            ( i, j ) -> Arguments.of( l_input, i, j )
+        );
+    }
+
+
+    /**
+     * create test case
+     *
+     * @param p_input input data
+     * @param p_class action class
+     * @param p_result result function
+     * @return test-case data
+     */
+    @SafeVarargs
+    @SuppressWarnings( "varargs" )
+    private static Stream<Arguments> aggregationvaluetestcase( final Stream<Number> p_input, final Stream<Class<? extends IAction>> p_class,
+                                                               final Function<Stream<Number>, ?>... p_result )
+    {
+        final List<Object> l_input = p_input.collect( Collectors.toList() );
+
+        return StreamUtils.zip(
+            p_class,
+            Arrays.stream( p_result ),
+            ( i, j ) -> Arguments.of( l_input, i, j )
         );
     }
 
@@ -210,58 +204,62 @@ public final class TestCActionMath extends IBaseTest
     /**
      * test all aggregation-value actions
      *
-     * @param p_input test data
+     * @param p_input test input data
+     * @param p_action action
+     * @param p_result result arguments
      *
      * @throws IllegalAccessException is thrwon on instantiation error
      * @throws InstantiationException is thrwon on instantiation error
      * @throws NoSuchMethodException is thrwon on instantiation error
      * @throws InvocationTargetException is thrwon on instantiation error
      */
-    @Test
-    @UseDataProvider( "aggregationvaluegenerate" )
-    public void aggregationvalueaction( final Triple<List<ITerm>, Class<? extends IAction>, Function<Stream<Number>, ?>> p_input )
+    @ParameterizedTest
+    @MethodSource( "aggregationvaluegenerate" )
+    public void aggregationvalueaction( final List<Object> p_input, final Class<? extends IAction> p_action, final Function<Stream<Number>, ?> p_result )
         throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException
     {
         final List<ITerm> l_return = new ArrayList<>();
 
-        p_input.getMiddle().getConstructor().newInstance().execute(
+        p_action.getConstructor().newInstance().execute(
             false, IContext.EMPTYPLAN,
-            p_input.getLeft(),
+            p_input.stream().map( CRawTerm::of ).collect( Collectors.toList() ),
             l_return
         );
 
-        Assert.assertEquals( 1, l_return.size() );
-        Assert.assertEquals( p_input.getRight().apply( p_input.getLeft().stream().map( ITerm::raw ) ), l_return.get( 0 ).raw() );
+        Assertions.assertEquals( 1, l_return.size() );
+        Assertions.assertEquals( p_result.apply( p_input.stream().map( i -> (Number)i ) ), l_return.get( 0 ).raw() );
     }
 
 
     /**
      * test all single-value actions
      *
-     * @param p_input test data
+     * @param p_input input test data
+     * @param p_action action
+     * @param p_result result arguments
      *
      * @throws IllegalAccessException is thrwon on instantiation error
      * @throws InstantiationException is thrwon on instantiation error
      * @throws NoSuchMethodException is thrwon on instantiation error
      * @throws InvocationTargetException is thrwon on instantiation error
      */
-    @Test
-    @UseDataProvider( "singlevaluegenerate" )
-    public void singlevalueaction( final Triple<List<ITerm>, Class<? extends IAction>, Function<Number, ?>> p_input )
+    @ParameterizedTest
+    @MethodSource( "singlevaluegenerate" )
+    public void singlevalueaction( final List<Object> p_input, final Class<? extends IAction> p_action, final Function<Number, ?> p_result )
         throws IllegalAccessException, InstantiationException, NoSuchMethodException, InvocationTargetException
     {
         final List<ITerm> l_return = new ArrayList<>();
 
-        p_input.getMiddle().getConstructor().newInstance().execute(
+        p_action.getConstructor().newInstance().execute(
             false, IContext.EMPTYPLAN,
-            p_input.getLeft(),
+            p_input.stream().map( CRawTerm::of ).collect( Collectors.toList() ),
             l_return
         );
 
-        Assert.assertArrayEquals(
-            p_input.getMiddle().toGenericString(),
-            p_input.getLeft().stream().map( ITerm::<Number>raw ).map( p_input.getRight() ).toArray(),
-            l_return.stream().map( ITerm::raw ).toArray()
+        Assertions.assertArrayEquals(
+            p_input.stream().map( i -> (Number)i ).map( p_result ).toArray(),
+            l_return.stream().map( ITerm::raw ).toArray(),
+            p_action.toGenericString()
         );
     }
 
@@ -280,8 +278,8 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertEquals( 18851684897584L, l_return.get( 0 ).<Number>raw() );
-        Assert.assertEquals( 6L, l_return.get( 1 ).<Number>raw() );
+        Assertions.assertEquals( 18851684897584L, l_return.get( 0 ).<Number>raw() );
+        Assertions.assertEquals( 6L, l_return.get( 1 ).<Number>raw() );
     }
 
 
@@ -299,11 +297,11 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertEquals( 120L, l_return.get( 0 ).<Number>raw() );
-        Assert.assertEquals( 1L, l_return.get( 1 ).<Number>raw() );
-        Assert.assertEquals( 2L, l_return.get( 2 ).<Number>raw() );
-        Assert.assertEquals( 6L, l_return.get( 3 ).<Number>raw() );
-        Assert.assertEquals( 24L, l_return.get( 4 ).<Number>raw() );
+        Assertions.assertEquals( 120L, l_return.get( 0 ).<Number>raw() );
+        Assertions.assertEquals( 1L, l_return.get( 1 ).<Number>raw() );
+        Assertions.assertEquals( 2L, l_return.get( 2 ).<Number>raw() );
+        Assertions.assertEquals( 6L, l_return.get( 3 ).<Number>raw() );
+        Assertions.assertEquals( 24L, l_return.get( 4 ).<Number>raw() );
     }
 
 
@@ -321,8 +319,8 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertArrayEquals( Stream.of( 2D, 2D, 2D ).toArray(), l_return.get( 0 ).<List<?>>raw().toArray() );
-        Assert.assertArrayEquals( Stream.of( 2D, 2D, 2D, 3D, 5D ).toArray(), l_return.get( 1 ).<List<?>>raw().toArray() );
+        Assertions.assertArrayEquals( Stream.of( 2D, 2D, 2D ).toArray(), l_return.get( 0 ).<List<?>>raw().toArray() );
+        Assertions.assertArrayEquals( Stream.of( 2D, 2D, 2D, 3D, 5D ).toArray(), l_return.get( 1 ).<List<?>>raw().toArray() );
     }
 
 
@@ -340,9 +338,9 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertEquals( 0.9999546021312976, l_return.get( 1 ).<Number>raw() );
-        Assert.assertEquals( 0.9999999979388463, l_return.get( 2 ).<Number>raw() );
-        Assert.assertEquals( 0.9999999999999065, l_return.get( 3 ).<Number>raw() );
+        Assertions.assertEquals( 0.9999546021312976, l_return.get( 1 ).<Number>raw() );
+        Assertions.assertEquals( 0.9999999979388463, l_return.get( 2 ).<Number>raw() );
+        Assertions.assertEquals( 0.9999999999999065, l_return.get( 3 ).<Number>raw() );
     }
 
 
@@ -360,7 +358,7 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertArrayEquals( Stream.of( 3L, 966L ).toArray(), l_return.stream().map( ITerm::<Number>raw ).toArray() );
+        Assertions.assertArrayEquals( Stream.of( 3L, 966L ).toArray(), l_return.stream().map( ITerm::<Number>raw ).toArray() );
     }
 
 
@@ -378,7 +376,7 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertArrayEquals(
+        Assertions.assertArrayEquals(
             Stream.of( 9.0, 16.0, 0.25 ).toArray(),
             l_return.stream().map( ITerm::raw ).toArray()
         );
@@ -399,8 +397,8 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertEquals( 1, l_return.size() );
-        Assert.assertEquals( 1.0152139522031014, l_return.get( 0 ).<Number>raw() );
+        Assertions.assertEquals( 1, l_return.size() );
+        Assertions.assertEquals( 1.0152139522031014, l_return.get( 0 ).<Number>raw() );
     }
 
 
@@ -418,8 +416,8 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertEquals( 1, l_return.size() );
-        Assert.assertEquals( 75.0, l_return.get( 0 ).<Number>raw() );
+        Assertions.assertEquals( 1, l_return.size() );
+        Assertions.assertEquals( 75.0, l_return.get( 0 ).<Number>raw() );
     }
 
     /**
@@ -439,7 +437,7 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertArrayEquals(
+        Assertions.assertArrayEquals(
             StreamUtils.windowed( l_input.stream(), 2, 2 )
                        .mapToDouble( i -> Math.hypot( i.get( 0 ), i.get( 1 ) ) )
                        .boxed()
@@ -463,8 +461,8 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertEquals( 1, l_return.size() );
-        Assert.assertEquals( 2D, l_return.get( 0 ).<Number>raw() );
+        Assertions.assertEquals( 1, l_return.size() );
+        Assertions.assertEquals( 2D, l_return.get( 0 ).<Number>raw() );
     }
 
     /**
@@ -481,8 +479,8 @@ public final class TestCActionMath extends IBaseTest
             l_return
         );
 
-        Assert.assertEquals( 1, l_return.size() );
-        Assert.assertEquals( 3D, l_return.get( 0 ).<Number>raw() );
+        Assertions.assertEquals( 1, l_return.size() );
+        Assertions.assertEquals( 3D, l_return.get( 0 ).<Number>raw() );
     }
 
 }
